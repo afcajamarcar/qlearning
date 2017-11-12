@@ -1,9 +1,6 @@
 package gui;
 
 import processing.core.PApplet;
-
-import java.util.ArrayList;
-
 import fisica.*;
 
 public class VisualAgent extends PApplet {
@@ -21,10 +18,13 @@ public class VisualAgent extends PApplet {
 	FBox floor; //The floor is set static
 	
 	//Tree triangles representing the creature or agent
-	FPoly head;
-	FPoly torso;
-	FPoly tail;
-	FDistanceJoint ht, tt;
+	//FPoly head;
+	//FPoly torso;
+	//FPoly tail;
+	//FDistanceJoint ht, tt;
+	
+	//cube creature
+	FBox creature;
 	
 	
 	
@@ -46,6 +46,18 @@ public class VisualAgent extends PApplet {
 		floor.setFill(255);
 		world.add(floor);
 		
+		creature = new FBox(40, 40);
+		creature.setPosition(120, 178);
+		world.add(creature);
+		
+		
+		System.out.println(creature.getForceX());
+		System.out.println(creature.getForceY());
+		
+		
+		/**
+		 * 
+		 
 		head = createTriangle(headVertex());
 		head.setFill(155);
 		head.setPosition(80, 50);
@@ -61,6 +73,8 @@ public class VisualAgent extends PApplet {
 		tail.setPosition(80, 50);
 		world.add(tail);
 		
+		
+		
 		ht = new FDistanceJoint(head, torso);
 		ht.setCollideConnected(true);
 		ht.setAnchor1(0, 10);
@@ -71,22 +85,27 @@ public class VisualAgent extends PApplet {
 		tt.setAnchor1(40, 10);
 		tt.setAnchor2(40, 45);
 		world.add(tt);
-		
+		*/
 		
 	}
 
 	public void draw(){
 		//fill background with black color
-		//background(0,0,0);
-		background(255,255,255);
+		background(0,0,0);
 		world.step();
 		world.draw();
 		if(xposBall < 0-rad) {
 			xposBall = width;
+			
 		}
+		ellipse(xposBall,yposBall,rad,rad);
 		xposBall =  (float) (xposBall + (xspeed*-1));
-		ellipse(xposBall,yposBall,rad,rad); 
 		System.out.println(getBallPostition());
+		if(creature.isResting()) {
+			System.out.println("Saltando...");
+			jump(-2000);
+		}
+		
 	}
 	
 	public float getxposBall() {
@@ -103,11 +122,14 @@ public class VisualAgent extends PApplet {
 		return x + " "+ y;
 	}
 	
+	public void jump(int forceY) {
+		creature.adjustVelocity(0,-forceY);
+	}
 	/**
 	 * Receives the three vertex inside an arraylist (9 values)
 	 * @param vertex
 	 * @return a Fpoly object with the shape of a triangle.
-	 */
+	 
 	public FPoly createTriangle(ArrayList<Integer> vertex) {
 		FPoly triangle = new FPoly();
 		triangle.vertex(vertex.get(0), vertex.get(1));
@@ -116,13 +138,13 @@ public class VisualAgent extends PApplet {
 		return triangle;
 		
 	}
-	
+	*/
 	/**
 	 * Fills an arraylist with the vertex of a triangle (head)
 	 * could be changed in order to make easier the jump or the overall form
 	 * of the creature
 	 * @return arraylist with vertex, x odd positions, y even positions
-	 */
+	 
 	public ArrayList<Integer> headVertex(){
 		ArrayList<Integer> headVertex = new ArrayList<>();
 		headVertex.add(35);
@@ -133,13 +155,13 @@ public class VisualAgent extends PApplet {
 		headVertex.add(10);
 		return headVertex;
 	}
-	
+	*/
 	/**
 	 * Fills an arraylist with the vertex of a triangle (torso)
 	 * could be changed in order to make easier the jump or the overall form
 	 * of the creature
 	 * @return arraylist with vertex, x odd positions, y even positions
-	 */
+	 
 	public ArrayList<Integer> torsoVertex(){
 		ArrayList<Integer> headVertex = new ArrayList<>();
 		headVertex.add(20);
@@ -150,13 +172,14 @@ public class VisualAgent extends PApplet {
 		headVertex.add(10);
 		return headVertex;
 	}
+	*/
 	
 	/**
 	 * Fills an arraylist with the vertex of a triangle (torso)
 	 * could be changed in order to make easier the jump or the overall form
 	 * of the creature
 	 * @return arraylist with vertex, x odd positions, y even positions
-	 */
+	 
 	public ArrayList<Integer> tailVertex(){
 		ArrayList<Integer> headVertex = new ArrayList<>();
 		headVertex.add(-30);
@@ -167,7 +190,7 @@ public class VisualAgent extends PApplet {
 		headVertex.add(45);
 		return headVertex;
 	}
-	
+	*/
 	public static void main(String[] args) {
 		PApplet.main(VisualAgent.class.getName());
 
